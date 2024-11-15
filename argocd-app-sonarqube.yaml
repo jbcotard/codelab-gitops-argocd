@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    k8slens-edit-resource-version: v1alpha1
+  name: sonarqube
+  namespace: argo-cd
+spec:
+  destination:
+    namespace: kcl-lchartrain-wk 
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: sonarqube
+    helm:
+      releaseName: sonarqube
+      valuesObject:
+        ingress:
+          enabled: true
+          hosts:
+          - name: sonar-lchartrain.codelab.cloud-sp.eu
+          tls:
+          - hosts:
+            - sonar-lchartrain.codelab.cloud-sp.eu
+    # github: https://github.com/SonarSource/helm-chart-sonarqube/tree/master/charts/sonarqube
+    repoURL: https://SonarSource.github.io/helm-chart-sonarqube
+    # versions: https://sonarsource.github.io/helm-chart-sonarqube/index.yaml
+    targetRevision: 10.7.0+3598 
